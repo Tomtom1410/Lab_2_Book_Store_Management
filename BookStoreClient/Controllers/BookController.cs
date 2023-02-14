@@ -3,6 +3,7 @@ using BookStoresAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Security.Policy;
 
 namespace BookStoreClient.Controllers
 {
@@ -10,6 +11,7 @@ namespace BookStoreClient.Controllers
     {
         private readonly HttpClient _httpClient = null;
         private string BookApiUrl = "";
+        private string PressApiUrl = "";
 
         public BookController()
         {
@@ -17,6 +19,7 @@ namespace BookStoreClient.Controllers
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             _httpClient.DefaultRequestHeaders.Accept.Add(contentType);
             BookApiUrl = $"https://localhost:7256/api/Book/";
+            PressApiUrl = $"https://localhost:7256/api/Press/GetAll";
         }
 
         public async Task<IActionResult> Index()
@@ -28,14 +31,17 @@ namespace BookStoreClient.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
+            ViewBag.Press = await GetPressAsync();
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(BookDto model)
         {
+            ViewBag.Press = await GetPressAsync();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -60,13 +66,14 @@ namespace BookStoreClient.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Press = await GetPressAsync();
             return View(book);
         }
 
         [HttpPost]
         public async Task<IActionResult> EditAsync(BookDto model)
         {
+            ViewBag.Press = await GetPressAsync();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -125,6 +132,12 @@ namespace BookStoreClient.Controllers
                 City = result[0].City,
                 Street = result[0].Street,
             };
+        }
+        private async Task<List<PressDto>> GetPressAsync()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync(PressApiUrl);
+            var result = response.Content.ReadFromJsonAsync<List<PressDto>>().Result;
+            return result;
         }
     }
 }

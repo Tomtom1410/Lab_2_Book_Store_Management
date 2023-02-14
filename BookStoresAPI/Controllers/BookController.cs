@@ -41,6 +41,7 @@ namespace BookStoresAPI.Controllers
                 Price = bookDto.Price,
                 City = bookDto.City,
                 Street = bookDto.Street,
+                PressId = bookDto.PressId,
             };
             var result = await _bookRepositories.CreateAsync(book);
             return Ok(result);
@@ -59,6 +60,7 @@ namespace BookStoresAPI.Controllers
                 Price = bookDto.Price,
                 City = bookDto.City,
                 Street = bookDto.Street,
+                PressId = bookDto.PressId,
             };
             var result = await _bookRepositories.UpdateAsync(book);
             return Ok(result);

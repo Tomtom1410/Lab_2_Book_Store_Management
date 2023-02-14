@@ -35,6 +35,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Street)
             </th>
+            <th>
+                PressName
+            </th>
+            <th>
+                Category
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -63,6 +69,18 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Street)
                 </td>
+                @if (item.Press != null)
+                {
+                    <td>
+                        @item.Press.Name
+                    </td>
+                    <td>
+                        @item.Press.Category
+                    </td>
+                }else{
+                    <td></td>
+                    <td></td>
+                }
                 <td>
                     @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })

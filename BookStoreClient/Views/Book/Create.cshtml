@@ -42,6 +42,11 @@
                 <input asp-for="Street" class="form-control" />
                 <span asp-validation-for="Street" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label class="control-label">Press</label>
+                <select class="form-select" asp-for="PressId" asp-items="@(new SelectList(ViewBag.Press,"Id", "Category"))"></select>
+                <span asp-validation-for="PressId" class="text-danger"></span>
+            </div>
             <div class="text-danger">
                 @ViewData["msg"] 
             </div>

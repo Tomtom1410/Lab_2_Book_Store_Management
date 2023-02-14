@@ -15,5 +15,6 @@ namespace BookStoresAPI.Models
         public string? City { get; set; }
         public string? Street { get; set; }
         public Press? Press { get; set; }
+        public string? PressId { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace BookStoresAPI.DataAccess
 
         public async Task<IEnumerable> GetAllBook()
         {
-            return await _dbContext.Books.ToListAsync();
+            return await _dbContext.Books.Include(c => c.Press).ToListAsync();
         }
 
         public async Task<bool> UpdateAsync(Book book)
@@ -81,6 +81,13 @@ namespace BookStoresAPI.DataAccess
         private IList<Book> init()
         {
             var books = new List<Book>();
+            Press press = new Press
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Press 1",
+                Category = Category.Book,
+            };
+
             Book book = new Book
             {
                 Id = Guid.NewGuid().ToString(),
@@ -90,15 +97,17 @@ namespace BookStoresAPI.DataAccess
                 Price = 59.99m,
                 City = "abc",
                 Street = "xyz",
-                Press = new Press
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Press 1",
-                    Category = Category.Book,
-                }
+                Press = press,
+                PressId = press.Id
             };
             books.Add(book);
 
+            press = new Press
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Press 1",
+                Category = Category.EBook,
+            };
             book = new Book
             {
                 Id = Guid.NewGuid().ToString(),
@@ -108,15 +117,17 @@ namespace BookStoresAPI.DataAccess
                 Price = 59.99m,
                 City = "abc",
                 Street = "xyz",
-                Press = new Press
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Press 1",
-                    Category = Category.Book,
-                }
+                Press = press,
+                PressId = press.Id
             };
             books.Add(book);
 
+            press = new Press
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Press 1",
+                Category = Category.Book,
+            };
             book = new Book
             {
                 Id = Guid.NewGuid().ToString(),
@@ -126,15 +137,17 @@ namespace BookStoresAPI.DataAccess
                 Price = 59.99m,
                 City = "abc",
                 Street = "xyz",
-                Press = new Press
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Press 1",
-                    Category = Category.Book,
-                }
+                Press = press,
+                PressId = press.Id
             };
             books.Add(book);
 
+            press = new Press
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = "Press 1",
+                Category = Category.Magazine,
+            };
             book = new Book
             {
                 Id = Guid.NewGuid().ToString(),
@@ -144,12 +157,8 @@ namespace BookStoresAPI.DataAccess
                 Price = 59.99m,
                 City = "abc",
                 Street = "xyz",
-                Press = new Press
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Name = "Press 1",
-                    Category = Category.Book,
-                }
+                Press = press,
+                PressId = press.Id
             };
             books.Add(book);
             return books;

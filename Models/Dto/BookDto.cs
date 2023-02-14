@@ -11,9 +11,13 @@ namespace BookStoreClient.Models
         [Required]
         public string Author { get; set; }
         [Required]
+        [Range(1,1000)]
         public decimal Price { get; set; }
         public string? City { get; set; }
         public string? Street { get; set; }
         public PressDto? Press { get; set; }
+        [Required]
+        [Display(Name = "Press")]
+        public string PressId { get; set; }
     }
 }
